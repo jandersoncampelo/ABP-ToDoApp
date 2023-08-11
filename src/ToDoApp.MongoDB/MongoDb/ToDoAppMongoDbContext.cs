@@ -1,4 +1,6 @@
-﻿using Volo.Abp.Data;
+﻿using MongoDB.Driver;
+using ToDoApp.Entities;
+using Volo.Abp.Data;
 using Volo.Abp.MongoDB;
 
 namespace ToDoApp.MongoDB;
@@ -6,17 +8,15 @@ namespace ToDoApp.MongoDB;
 [ConnectionStringName("Default")]
 public class ToDoAppMongoDbContext : AbpMongoDbContext
 {
-    /* Add mongo collections here. Example:
-     * public IMongoCollection<Question> Questions => Collection<Question>();
-     */
+    public IMongoCollection<ToDoItem> ToDoItems => Collection<ToDoItem>();
 
     protected override void CreateModel(IMongoModelBuilder modelBuilder)
     {
         base.CreateModel(modelBuilder);
 
-        //modelBuilder.Entity<YourEntity>(b =>
-        //{
-        //    //...
-        //});
+        modelBuilder.Entity<ToDoItem>(b =>
+        {
+            b.CollectionName = "ToDoItems";
+        });
     }
 }
